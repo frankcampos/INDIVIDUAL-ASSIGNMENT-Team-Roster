@@ -38,7 +38,7 @@ function NewForm({ obj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.firebaseKey) {
-      updateMember(formInput).then(() => router.push(`/${obj.firebaseKey}`));
+      updateMember(formInput).then(() => router.push('/'));
     } else {
       const payload = { ...formInput, uid: user.uid };
       createMember(payload).then(({ name }) => {
@@ -52,7 +52,7 @@ function NewForm({ obj }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'}Player</h2>
+      <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Player</h2>
       {/* IMAGE INPUT  */}
       <FloatingLabel controlId="floatingInput1" label="Player Image" className="mb-3">
         <Form.Control
@@ -64,16 +64,16 @@ function NewForm({ obj }) {
           required
         />
       </FloatingLabel>
-      {/* FIRST NAME INPUT  */}
+      {/* NAME INPUT  */}
       <FloatingLabel controlId="floatingInput2" label="Name" className="mb-3">
-        <Form.Control type="text" placeholder="Name" name="name" value={formInput.first_name} onChange={handleChange} required />
+        <Form.Control type="text" placeholder="Name" name="name" value={formInput.name} onChange={handleChange} required />
       </FloatingLabel>
-      {/* LAST NAME INPUT  */}
+      {/* ROLE INPUT  */}
       <FloatingLabel controlId="floatingInput3" label="Role" className="mb-3">
-        <Form.Control type="text" placeholder="Role" name="role" value={formInput.last_name} onChange={handleChange} required />
+        <Form.Control type="text" placeholder="Role" name="role" value={formInput.role} onChange={handleChange} required />
       </FloatingLabel>
       {/* SUBMIT BUTTON  */}
-      <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Author</Button>
+      <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Player </Button>
     </Form>
   );
 }
