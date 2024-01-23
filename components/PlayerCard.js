@@ -42,7 +42,7 @@ function PlayerCard({ memberObject, onUpdate }) {
           {memberObject.role}
         </p>
         {/* DYNAMIC LINK TO VIEW THE BOOK DETAILS  */}
-        <Link href={`/view/${memberObject.firebaseKey}`} passHref>
+        <Link href={`/${memberObject.firebaseKey}`} passHref>
           <Button variant="primary" className="m-2" style={{ boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.5)' }}>
             VIEW
           </Button>
