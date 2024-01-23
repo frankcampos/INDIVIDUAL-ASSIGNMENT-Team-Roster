@@ -15,7 +15,6 @@ const createMember = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// FIXME: UPDATE AUTHOR
 const updateMember = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/members/${payload.firebaseKey}.json`, {
     method: 'PATCH',
@@ -41,4 +40,37 @@ const getSingleMember = (firebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export { createMember, updateMember, getSingleMember };
+// FIXME: DELETE AUTHOR
+const deleteSingleMember = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/members/${firebaseKey}.json`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+const getMembers = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/members.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
+export {
+  createMember, updateMember, getSingleMember, deleteSingleMember, getMembers,
+};
