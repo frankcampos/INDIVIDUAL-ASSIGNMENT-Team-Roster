@@ -7,31 +7,27 @@ import PlayerCard from '../components/PlayerCard';
 function ViewSinglePlayer() {
   const router = useRouter();
   const { firebaseKey } = router.query;
-  // TODO: Set a state for books
-  const [player, setPlayer] = useState({});
+  const [player, setPlayer] = useState(null); // Initialize to null
 
-  // TODO: Get user ID using useAuth Hoo
-
-  // TODO: create a function that makes the API call to get all the members
   const getPlayer = () => {
-    getSingleMember(firebaseKey).then(setPlayer);
+    if (firebaseKey) {
+      getSingleMember(firebaseKey).then(setPlayer).catch(console.error);
+    }
   };
 
-  // TODO: make the call to the API to get all the members on component render
   useEffect(() => {
     getPlayer();
-  }, []);
-
-  // TODO: make the call to the API to get all the filtered members on component render
+  }, [firebaseKey]); // Depend on firebaseKey
 
   return (
     <div className="text-center my-4">
       <div className="d-flex flex-wrap" style={{ justifyContent: 'space-evenly' }}>
-        {/* TODO: map over members here using PlayerCard component */}
-
-        <PlayerCard key={player.firebaseKey} memberObject={player} />
+        {player ? (
+          <PlayerCard key={player.firebaseKey} memberObject={player} />
+        ) : (
+          <p>Noone is here...</p> // Display loading message
+        )}
       </div>
-
     </div>
   );
 }

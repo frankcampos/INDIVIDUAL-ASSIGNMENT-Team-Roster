@@ -5,9 +5,14 @@ const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
 
+  const handleKeyUp = (e) => {
+    setSearchTerm(e.target.value);
+    router.push(`/search/${e.target.value}`);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent default form submission
-    router.push(`/search/${searchTerm}`); // Navigate to [search].js with searchTerm
+    router.push(`/search/${searchTerm}`);
   };
 
   return (
@@ -17,6 +22,7 @@ const SearchBar = () => {
         placeholder="Search..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyUp={handleKeyUp}
       />
     </form>
   );
