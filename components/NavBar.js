@@ -18,7 +18,7 @@ export default function NavBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             {/* Your other navigation links */}
-            <Link passHref href="/index">
+            <Link passHref href="/players">
               <Nav.Link>PLAYERS</Nav.Link>
             </Link>
           </Nav>

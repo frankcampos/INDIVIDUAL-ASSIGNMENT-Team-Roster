@@ -40,7 +40,7 @@ function Teamcard({ memberObject, onUpdate }) {
           </Button>
         </Link>
         {/* DYNAMIC LINK TO EDIT THE BOOK DETAILS  */}
-        <Link href={`/edit/${memberObject.firebaseKey}`} passHref>
+        <Link href={`/editteam/${memberObject.firebaseKey}`} passHref>
           <Button variant="info" style={{ boxShadow: '0px 1rem 1.5rem rgba(0, 0, 0, 0.5)' }}>
             EDIT
           </Button>
