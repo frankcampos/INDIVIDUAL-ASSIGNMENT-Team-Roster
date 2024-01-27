@@ -13,6 +13,7 @@ const initialState = {
   image: '',
   name: '',
   role: '',
+  status: true,
 };
 
 // TODO: Create function NewForm
@@ -69,7 +70,7 @@ function NewForm({ obj }) {
         <Form.Control type="text" placeholder="Role" name="role" value={formInput.role} onChange={handleChange} required />
       </FloatingLabel>
 
-      {/* AUTHOR SELECT  */}
+      {/* TEAM SELECT  */}
       <FloatingLabel controlId="floatingSelect" label="Team">
         <Form.Select aria-label="Team" name="team_id" onChange={handleChange} className="mb-3" value={formInput.team_id} required>
           <option value="">Select a Team</option>
@@ -80,6 +81,22 @@ function NewForm({ obj }) {
           ))}
         </Form.Select>
       </FloatingLabel>
+
+      {/* A WAY TO HANDLE UPDATES FOR TOGGLES, RADIOS, ETC  */}
+      <Form.Check
+        className="text-white mb-3"
+        type="switch"
+        id="status"
+        name="status"
+        label={formInput.status ? 'Active' : 'Retired'}
+        checked={formInput.status}
+        onChange={(e) => {
+          setFormInput((prevState) => ({
+            ...prevState,
+            status: e.target.checked,
+          }));
+        }}
+      />
 
       {/* SUBMIT BUTTON  */}
       <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Player </Button>
@@ -93,6 +110,7 @@ NewForm.propTypes = {
     role: PropTypes.string,
     team_id: PropTypes.string,
     firebaseKey: PropTypes.string,
+    status: PropTypes.bool,
   }),
 };
 
