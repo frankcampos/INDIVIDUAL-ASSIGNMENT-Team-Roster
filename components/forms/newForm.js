@@ -6,25 +6,28 @@ import { Button } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useAuth } from '../../utils/context/authContext';
 import { createMember, updateMember } from '../../api/membersData';
+import { getTeams } from '../../api/teamsData';
 
 // TODO: initialState
 const initialState = {
   image: '',
   name: '',
   role: '',
-
 };
 
 // TODO: Create function NewForm
 function NewForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
+  const [teams, setTeams] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
+    getTeams(user.uid).then(setTeams);
     if (obj.firebaseKey) setFormInput(obj);
-  },
-  [obj]);
+  }, [obj, user]);
+
+  // useEffetc get Players
 
   // TODO: handleChange
   const handleChange = (e) => {
@@ -55,14 +58,7 @@ function NewForm({ obj }) {
       <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Player</h2>
       {/* IMAGE INPUT  */}
       <FloatingLabel controlId="floatingInput1" label="Player Image" className="mb-3">
-        <Form.Control
-          type="url"
-          placeholder="Enter an image url"
-          name="image"
-          value={formInput.image}
-          onChange={handleChange}
-          required
-        />
+        <Form.Control type="url" placeholder="Enter an image url" name="image" value={formInput.image} onChange={handleChange} required />
       </FloatingLabel>
       {/* NAME INPUT  */}
       <FloatingLabel controlId="floatingInput2" label="Name" className="mb-3">
@@ -72,6 +68,19 @@ function NewForm({ obj }) {
       <FloatingLabel controlId="floatingInput3" label="Role" className="mb-3">
         <Form.Control type="text" placeholder="Role" name="role" value={formInput.role} onChange={handleChange} required />
       </FloatingLabel>
+
+      {/* AUTHOR SELECT  */}
+      <FloatingLabel controlId="floatingSelect" label="Team">
+        <Form.Select aria-label="Team" name="team_id" onChange={handleChange} className="mb-3" value={formInput.team_id} required>
+          <option value="">Select a Team</option>
+          {teams.map((team) => (
+            <option key={team.firebaseKey} value={team.firebaseKey}>
+              {team.name}
+            </option>
+          ))}
+        </Form.Select>
+      </FloatingLabel>
+
       {/* SUBMIT BUTTON  */}
       <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Player </Button>
     </Form>
@@ -82,6 +91,7 @@ NewForm.propTypes = {
     image: PropTypes.string,
     name: PropTypes.string,
     role: PropTypes.string,
+    team_id: PropTypes.string,
     firebaseKey: PropTypes.string,
   }),
 };
