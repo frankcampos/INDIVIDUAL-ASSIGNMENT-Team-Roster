@@ -33,9 +33,9 @@ function PlayerCard({ memberObject, onUpdate }) {
       <Card.Body>
         <Card.Title>{memberObject.name}</Card.Title>
         <p className="card-text bold">
-          {memberObject.role && (
+          {!memberObject.status && (
             <span>
-              {memberObject.name}
+              RETIRED
               <br />
             </span>
           )}{' '}
@@ -67,6 +67,7 @@ PlayerCard.propTypes = {
     name: PropTypes.string,
     role: PropTypes.string,
     firebaseKey: PropTypes.string,
+    status: PropTypes.bool,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
