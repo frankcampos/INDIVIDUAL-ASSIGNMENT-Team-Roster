@@ -71,6 +71,18 @@ const getTeams = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getTeamPlayers = (teamid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/members.json?orderBy="team_id"&equalTo="${teamid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
 export {
-  createTeam, updateTeam, getSingleTeam, deleteSingleTeam, getTeams,
+  createTeam, updateTeam, getSingleTeam, deleteSingleTeam, getTeams, getTeamPlayers,
 };
